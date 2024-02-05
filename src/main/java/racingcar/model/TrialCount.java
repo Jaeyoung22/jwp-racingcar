@@ -17,8 +17,12 @@ public class TrialCount {
 
     private int value;
 
-    public TrialCount(int value) {
+    private TrialCount(int value) {
         this.value = value;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     public int decrement() {

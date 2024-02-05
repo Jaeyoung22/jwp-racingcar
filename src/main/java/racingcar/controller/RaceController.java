@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import racingcar.dto.CreateRaceRequest;
-import racingcar.dto.CreateRaceResponse;
+import racingcar.dto.RaceDto;
 import racingcar.service.RaceService;
 
 @Controller
@@ -20,8 +20,8 @@ public class RaceController {
     }
 
     @PostMapping("plays")
-    public ResponseEntity<CreateRaceResponse> create(@RequestBody CreateRaceRequest request) {
-        CreateRaceResponse response = raceService.create(request);
+    public ResponseEntity<RaceDto> create(@RequestBody CreateRaceRequest request) {
+        RaceDto response = raceService.create(request);
         return ResponseEntity.ok(response);
     }
 }
