@@ -2,7 +2,7 @@ package racingcar.model;
 
 public class TrialCount {
 
-    private static final String ERROR_NEGATIVE_TRIAL_COUNT = "시도 횟수는 양의 정수이어야 합니다";
+    public static final String ERROR_NEGATIVE_TRIAL_COUNT = "시도 횟수는 양의 정수이어야 합니다";
 
     public static TrialCount from(int value) {
         validate(value);

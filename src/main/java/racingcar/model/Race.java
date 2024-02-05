@@ -7,11 +7,23 @@ import java.util.stream.Collectors;
 
 public class Race {
 
+    public static final String ERROR_NO_DELIMITER = "차 이름은 쉼표(,)로 구분되어야 합니다";
+    public static final String ERROR_ONE_OR_NO_CAR = "고유한 차 이름이 2대 이상 있어야 합니다";
+
     public static Race from(String names, int count) {
+        if (!names.contains(CarName.DELIMITER)) {
+            throw new IllegalArgumentException(ERROR_NO_DELIMITER);
+        }
+
         List<Car> cars = Arrays.stream(names.split(CarName.DELIMITER))
+                .distinct()
                 .map(CarName::from)
                 .map(Car::new)
                 .collect(Collectors.toList());
+
+        if (cars.size() <= 1) {
+            throw new IllegalArgumentException(ERROR_ONE_OR_NO_CAR);
+        }
 
         TrialCount trialCount = TrialCount.from(count);
 
@@ -23,7 +35,7 @@ public class Race {
     private final TrialCount trialCount;
     private List<Car> winners;
 
-    private Race(List<Car> cars, TrialCount trialCount) {
+    protected Race(List<Car> cars, TrialCount trialCount) {
         this.cars = cars;
         this.trialCount = trialCount;
     }
@@ -63,7 +75,7 @@ public class Race {
         this.winners = winners;
     }
 
-    private int pickRandomDistance() {
+    protected int pickRandomDistance() {
         return (int)(Math.random() * 10);
     }
 

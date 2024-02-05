@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class CarName {
 
+    public static final String ERROR_EMPTY = "차 이름이 비어 있을 수 없습니다";
+    public static final String ERROR_TOO_LONG = "차 이름이 5글자를 넘을 수 없습니다";
     public static final String DELIMITER = ",";
 
     public static CarName from(String name) {
@@ -12,8 +14,12 @@ public class CarName {
     }
 
     public static void validateName(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException(ERROR_EMPTY);
+        }
+
         if (name.length() > 5) {
-            throw new IllegalArgumentException("차 이름이 5글자를 넘을 수 없습니다");
+            throw new IllegalArgumentException(ERROR_TOO_LONG);
         }
     }
 
