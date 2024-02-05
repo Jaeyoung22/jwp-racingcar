@@ -1,7 +1,9 @@
-package racingcar.model;
+package racingcar.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import lombok.Getter;
 
+@Getter
 public class Car {
     private final String name;
     private int position = 0;
@@ -25,13 +27,5 @@ public class Car {
         if (Randoms.pickNumberInRange(0, 9) >= 4) {
             position++;
         }
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public String getName() {
-        return name;
     }
 }

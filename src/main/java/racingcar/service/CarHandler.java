@@ -1,9 +1,11 @@
-package racingcar.model;
+package racingcar.service;
+
+import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+@Getter
 public class CarHandler {
     private final List<Car> carList;
     private int maxPosition = 0;
@@ -19,16 +21,13 @@ public class CarHandler {
         }
     }
 
-    public HashMap<String, Integer> moveCar() {
-        HashMap<String, Integer> position = new HashMap<String, Integer>();
+    public void moveCar() {
         for (Car car: carList) {
             car.move();
-            position.put(car.getName(), car.getPosition());
             if (car.getPosition() > maxPosition) {
                 maxPosition = car.getPosition();
             }
         }
-        return position;
     }
 
     public List<String> getFirstCarName() {
