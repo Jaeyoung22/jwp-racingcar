@@ -21,17 +21,17 @@ public class RaceService {
                 .map(Car::new)
                 .collect(Collectors.toList());
 
-        RaceRoundCount roundCount = RaceRoundCount.from(count);
+        TrialCount trialCount = TrialCount.from(count);
 
-        while (roundCount.decrement() > 0) {
-            playRound(cars);
+        while (trialCount.decrement() > 0) {
+            playTrial(cars);
         }
 
         RaceResult result = RaceResult.from(cars);
         return CreateRaceResponse.from(result);
     }
 
-    private void playRound(List<Car> cars) {
+    private void playTrial(List<Car> cars) {
         for (Car car: cars) {
             if (pickRandomDistance() >= RaceConfig.MOVE_THRESHOLD) {
                 car.move();
