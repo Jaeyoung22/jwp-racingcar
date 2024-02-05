@@ -5,12 +5,14 @@ import racingcar.model.Car;
 import racingcar.model.CarName;
 import racingcar.model.Race;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class RaceDto {
+public class RaceResultDto {
 
-    public static RaceDto from(Race race) {
+    public static RaceResultDto from(Race race) {
         int trialCount = race.getTrialCount().getValue();
 
         String winners = race.getWinners()
@@ -24,8 +26,15 @@ public class RaceDto {
                 .map(CarDto::from)
                 .collect(Collectors.toList());
 
-        return new RaceDto(trialCount, winners, racingCars);
+        return new RaceResultDto(trialCount, winners, racingCars);
     }
+
+    private static String generateId() {
+        return UUID.randomUUID().toString();
+    }
+
+    @JsonIgnore
+    private final String id;
 
     @JsonIgnore
     private final int trialCount;
@@ -34,10 +43,23 @@ public class RaceDto {
 
     private final List<CarDto> racingCars;
 
-    public RaceDto(int trialCount, String winners, List<CarDto> racingCars) {
+    @JsonIgnore
+    private LocalDateTime createdAt;
+
+    private RaceResultDto(int trialCount, String winners, List<CarDto> racingCars) {
+        this(generateId(), trialCount, winners, racingCars, null);
+    }
+
+    public RaceResultDto(String id, int trialCount, String winners, List<CarDto> racingCars, LocalDateTime createdAt) {
+        this.id = id;
         this.trialCount = trialCount;
         this.winners = winners;
         this.racingCars = racingCars;
+        this.createdAt = createdAt;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getTrialCount() {
@@ -50,5 +72,13 @@ public class RaceDto {
 
     public List<CarDto> getRacingCars() {
         return racingCars;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
