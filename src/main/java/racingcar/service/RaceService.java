@@ -30,4 +30,8 @@ public class RaceService {
         return raceResult;
     }
 
+    public List<RaceResultDto> findAll() {
+        return raceResultRepository.findAll();
+    }
+
 }

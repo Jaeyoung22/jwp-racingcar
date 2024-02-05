@@ -43,19 +43,16 @@ public class RaceResultDto {
 
     private final List<CarDto> racingCars;
 
-    @JsonIgnore
-    private LocalDateTime createdAt;
 
     private RaceResultDto(int trialCount, String winners, List<CarDto> racingCars) {
-        this(generateId(), trialCount, winners, racingCars, null);
+        this(generateId(), trialCount, winners, racingCars);
     }
 
-    public RaceResultDto(String id, int trialCount, String winners, List<CarDto> racingCars, LocalDateTime createdAt) {
+    public RaceResultDto(String id, int trialCount, String winners, List<CarDto> racingCars) {
         this.id = id;
         this.trialCount = trialCount;
         this.winners = winners;
         this.racingCars = racingCars;
-        this.createdAt = createdAt;
     }
 
     public String getId() {
@@ -74,11 +71,4 @@ public class RaceResultDto {
         return racingCars;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }

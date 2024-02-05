@@ -8,4 +8,6 @@ public interface RaceResultRepository {
 
     void save(RaceResultDto race);
 
+    List<RaceResultDto> findAll();
+
 }

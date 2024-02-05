@@ -22,10 +22,18 @@ public class CarDto {
 
     private final int position;
 
+    @JsonIgnore
+    private final String raceId;
+
     public CarDto(String name, int position) {
-        this.id = generateId();
+        this(generateId(), name, position, null);
+    }
+
+    public CarDto(String id, String name, int position, String raceId) {
+        this.id = id;
         this.name = name;
         this.position = position;
+        this.raceId = raceId;
     }
 
     public String getId() {
@@ -38,5 +46,9 @@ public class CarDto {
 
     public int getPosition() {
         return position;
+    }
+
+    public String getRaceId() {
+        return raceId;
     }
 }
