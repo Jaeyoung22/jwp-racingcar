@@ -6,8 +6,8 @@ public class Car {
 
     private int position = 0;
 
-    public Car(String name) {
-        this.name = CarName.from(name);
+    public Car(CarName name) {
+        this.name = name;
     }
 
     public void move() {

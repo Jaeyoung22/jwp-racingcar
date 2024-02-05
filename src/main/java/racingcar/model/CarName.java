@@ -4,9 +4,11 @@ import java.util.Objects;
 
 public class CarName {
 
+    public static final String DELIMITER = ",";
+
     public static CarName from(String name) {
         validateName(name);
-        return new CarName(name);
+        return new CarName(name.trim());
     }
 
     public static void validateName(String name) {

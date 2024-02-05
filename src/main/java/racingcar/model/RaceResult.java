@@ -5,13 +5,12 @@ import java.util.List;
 
 public class RaceResult {
 
-    private final List<Car> cars;
-
-    public RaceResult(List<Car> cars) {
-        this.cars = cars;
+    public static RaceResult from(List<Car> cars) {
+        List<Car> winners = determineWinners(cars);
+        return new RaceResult(cars, winners);
     }
 
-    public List<Car> determineWinners() {
+    private static List<Car> determineWinners(List<Car> cars) {
         int winnerPosition = 0;
         List<Car> winners = new ArrayList<>();
 
@@ -28,6 +27,23 @@ public class RaceResult {
             }
         }
 
+        return winners;
+    }
+
+    private final List<Car> cars;
+
+    private final List<Car> winners;
+
+    private RaceResult(List<Car> cars, List<Car> winners) {
+        this.cars = cars;
+        this.winners = winners;
+    }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public List<Car> getWinners() {
         return winners;
     }
 }
