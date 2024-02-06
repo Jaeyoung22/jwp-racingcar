@@ -5,3 +5,10 @@ CREATE TABLE PLAY_RESULT (
     created_at  DATETIME    NOT NULL default current_timestamp,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE PLAYER_RESULT (
+    id  INT NOT NULL,
+    name VARCHAR(5) NOT NULL,
+    position INT NOT NULL,
+    FOREIGN KEY (id) REFERENCES PLAY_RESULT(id)
+);
