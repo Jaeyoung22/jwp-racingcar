@@ -9,6 +9,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class PlayResponse {
-    String winners;
-    List<Car> racingCars;
+    private String winners;
+    private List<Car> racingCars;
 }

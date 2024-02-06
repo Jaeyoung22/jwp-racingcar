@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class PlayRequest {
-    String names;
-    int count;
+    private String names;
+    private int count;
 }
