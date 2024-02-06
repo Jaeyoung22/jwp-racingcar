@@ -1,5 +1,6 @@
 package racingcar.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,14 +9,18 @@ import racingcar.dto.PlayRequest;
 import racingcar.dto.PlayResponse;
 import racingcar.service.Racing;
 
+import java.sql.SQLException;
+
 @Controller
+@RequiredArgsConstructor
 public class PlayController {
+    private final Racing racing;
+
     @PostMapping("/plays")
     public ResponseEntity<PlayResponse> playRacingGame(@RequestBody PlayRequest playRequest) {
-        Racing racing = new Racing();
         try{
             racing.run(playRequest.getNames(), playRequest.getCount());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | SQLException e) {
             return ResponseEntity.status(400).build();
         }
 

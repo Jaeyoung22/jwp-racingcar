@@ -1,14 +1,29 @@
 package racingcar.service;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import racingcar.domain.PlayResult;
+import racingcar.domain.PlayerResult;
+import racingcar.repository.PlayRepository;
+
+import java.sql.SQLException;
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class Racing {
-    private final CarHandler carHandler = new CarHandler();
+    private CarHandler carHandler;
+    private final PlayRepository playRepository;
 
-    public void run(String carNames, int tryNum) {
+    public void run(String carNames, int tryNum) throws SQLException {
+        carHandler = new CarHandler();
         startRacing(carNames);
         validate(tryNum);
         processRacing(tryNum);
+        int id = playRepository.savePlay(new PlayResult(getWinners()));
+        for (Car car: carHandler.getCarList()) {
+            playRepository.savePlayer(id, new PlayerResult(car.getName(), car.getPosition()));
+        }
     }
 
     private void startRacing(String carNames) {
