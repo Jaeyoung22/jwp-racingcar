@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import racingcar.domain.PlayResult;
 import racingcar.domain.PlayerResult;
+import racingcar.dto.CarDto;
 import racingcar.repository.PlayRepository;
+import racingcar.repository.PlayerRepository;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,6 +17,7 @@ import java.util.List;
 public class Racing {
     private CarHandler carHandler;
     private final PlayRepository playRepository;
+    private final PlayerRepository playerRepository;
 
     public void run(String carNames, int tryNum) throws SQLException {
         carHandler = new CarHandler();
@@ -22,7 +26,7 @@ public class Racing {
         processRacing(tryNum);
         int id = playRepository.savePlay(new PlayResult(getWinners()));
         for (Car car: carHandler.getCarList()) {
-            playRepository.savePlayer(id, new PlayerResult(car.getName(), car.getPosition()));
+            playerRepository.savePlayer(id, new PlayerResult(car.getName(), car.getPosition()));
         }
     }
 
@@ -46,7 +50,14 @@ public class Racing {
         return String.join(", ", carHandler.getFirstCarName());
     }
 
-    public List<Car> getCars() {
-        return carHandler.getCarList();
+    public List<CarDto> getCars() {
+        List<CarDto> cars = new ArrayList<>();
+
+        for (Car car: carHandler.getCarList()) {
+            CarDto carDto = new CarDto(car.getName(), car.getPosition());
+            cars.add(carDto);
+        }
+
+        return cars;
     }
 }

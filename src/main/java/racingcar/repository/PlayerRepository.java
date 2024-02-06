@@ -1,52 +1,46 @@
 package racingcar.repository;
 
-import javax.sql.DataSource;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import racingcar.domain.PlayResult;
+import racingcar.domain.PlayerResult;
 import racingcar.utils.DBUtils;
 
-import java.sql.*;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class PlayRepository {
+public class PlayerRepository {
     private final DataSource dataSource;
 
-    public int savePlay(PlayResult playResult) {
-        String sql = "insert into play_result(winners) values(?)";
+    public void savePlayer(int racingId, PlayerResult playerResult) {
+        String sql = "insert into player_result(id, name, position) values(?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
-        ResultSet rs = null;
 
         try {
             conn = dataSource.getConnection();
-            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, playResult.getWinners());
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, racingId);
+            pstmt.setString(2, playerResult.getName());
+            pstmt.setInt(3, playerResult.getPosition());
             pstmt.executeUpdate();
-
-            rs = pstmt.getGeneratedKeys();
-            if (!rs.next()) {
-                throw new SQLException("id 조회 실패");
-            }
-            return rs.getInt("id");
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
-            DBUtils.close(dataSource, conn, pstmt, rs);
+            DBUtils.close(dataSource, conn, pstmt, null);
         }
     }
 
+    public List<PlayerResult> getPlayers(int id) {
+        List<PlayerResult> players = new ArrayList<>();
 
-
-    public List<PlayResult> getPlays() {
-        List<PlayResult> plays = new ArrayList<>();
-
-        String sql = "select * from play_result";
+        String sql = "select * from player_result where id=?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -55,12 +49,13 @@ public class PlayRepository {
         try {
             conn = dataSource.getConnection();
             pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
 
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                plays.add(new PlayResult(rs.getInt("id"), rs.getString("winners")));
+                players.add(new PlayerResult(rs.getString("name"), rs.getInt("position")));
             }
-            return plays;
+            return players;
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
