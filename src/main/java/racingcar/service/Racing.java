@@ -8,7 +8,6 @@ import racingcar.dto.CarDto;
 import racingcar.repository.PlayRepository;
 import racingcar.repository.PlayerRepository;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class Racing {
     private final PlayRepository playRepository;
     private final PlayerRepository playerRepository;
 
-    public void run(String carNames, int tryNum) throws SQLException {
+    public void run(String carNames, int tryNum) {
         carHandler = new CarHandler();
         startRacing(carNames);
         validate(tryNum);

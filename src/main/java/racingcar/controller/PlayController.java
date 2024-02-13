@@ -11,7 +11,6 @@ import racingcar.dto.PlayResponse;
 import racingcar.service.PlaysService;
 import racingcar.service.Racing;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -24,7 +23,7 @@ public class PlayController {
     public ResponseEntity<PlayResponse> playRacingGame(@RequestBody PlayRequest playRequest) {
         try{
             racing.run(playRequest.getNames(), playRequest.getCount());
-        } catch (IllegalArgumentException | SQLException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).build();
         }
 
