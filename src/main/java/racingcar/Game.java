@@ -33,6 +33,7 @@ public class Game {
     }
 
     public void play() {
+        System.out.println(cars);
         repeat(this::race);
     }
 
