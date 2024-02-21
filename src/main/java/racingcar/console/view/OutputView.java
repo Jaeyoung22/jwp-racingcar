@@ -1,4 +1,4 @@
-package racingcar.view;
+package racingcar.console.view;
 
 import java.util.List;
 import java.util.Map;
@@ -7,6 +7,9 @@ public class OutputView {
 
     private static final String ERROR_PREFIX = "[ERROR]";
     private static final String BLANK = " ";
+
+    private OutputView() {
+    }
 
     public static void printErrorMsg(Exception e) {
         System.out.println(ERROR_PREFIX + BLANK + e.getMessage());

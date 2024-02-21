@@ -1,4 +1,4 @@
-package racingcar;
+package racingcar.domain.car;
 
 import camp.nextstep.edu.missionutils.Randoms;
 
@@ -23,7 +23,7 @@ public class Cars {
         }
     }
 
-    public Map<String, Integer> fetchCurrentPositions() {
+    public Map<String, Integer> fetchPlayerResults() {
         Map<String, Integer> currentPositions = new LinkedHashMap<>();
 
         for (Car car : cars) {

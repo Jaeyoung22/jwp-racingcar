@@ -1,6 +1,4 @@
-package racingcar;
-
-import java.util.Objects;
+package racingcar.domain.car;
 
 public class Car {
 
@@ -25,18 +23,5 @@ public class Car {
 
     public int getPosition() {
         return position.getValue();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Car car = (Car) o;
-        return Objects.equals(name, car.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }

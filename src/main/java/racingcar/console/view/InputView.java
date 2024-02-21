@@ -1,4 +1,4 @@
-package racingcar.view;
+package racingcar.console.view;
 
 import camp.nextstep.edu.missionutils.Console;
 
@@ -26,14 +26,14 @@ public class InputView {
         throw new IllegalArgumentException("이름은 쉼표로 구분되어야 합니다.");
     }
 
-    public static int readNumber() {
+    public static int readTrialCount() {
         try {
             System.out.println("시도할 횟수는 몇회인가요?");
             String input = Console.readLine();
             return validateNumber(input);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMsg(e);
-            return readNumber();
+            return readTrialCount();
         }
     }
 
