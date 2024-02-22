@@ -7,6 +7,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Objects;
+
 @Repository
 public class PlayResultJdbcRepository implements PlayResultRepository {
 
@@ -28,6 +31,11 @@ public class PlayResultJdbcRepository implements PlayResultRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         template.update(sql, parameters, keyHolder);
 
-        return template.queryForObject("select * from PLAY_RESULT where id = :ID", keyHolder.getKeys(), new PlayResultMapper());
+        return template.queryForObject("select * from PLAY_RESULT where id = :ID", Objects.requireNonNull(keyHolder.getKeys()), new PlayResultMapper());
+    }
+
+    @Override
+    public List<PlayResult> findAll() {
+        return template.query("select * from PLAY_RESULT", new PlayResultMapper());
     }
 }

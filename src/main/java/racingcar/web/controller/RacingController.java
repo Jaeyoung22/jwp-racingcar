@@ -1,15 +1,17 @@
 package racingcar.web.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import racingcar.dto.RacingInitInfo;
 import racingcar.dto.RacingResult;
 import racingcar.service.RacingService;
 import racingcar.web.dto.RacingRequest;
 import racingcar.web.dto.RacingResultResponse;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RequestMapping("/plays")
 @RestController
 public class RacingController {
 
@@ -19,8 +21,8 @@ public class RacingController {
         this.racingService = racingService;
     }
 
-    @PostMapping(path = "/plays")
-    public ResponseEntity<RacingResultResponse> play(@RequestBody RacingRequest racingRequest) {
+    @PostMapping
+    public ResponseEntity<RacingResultResponse> create(@RequestBody RacingRequest racingRequest) {
         String names = racingRequest.getNames();
         String trialCount = racingRequest.getCount();
         RacingInitInfo racingInitInfo = new RacingInitInfo(names, trialCount);
@@ -29,5 +31,16 @@ public class RacingController {
 
         RacingResultResponse response = RacingResultResponse.from(result);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RacingResultResponse>> readAll() {
+        List<RacingResult> racingResults = racingService.readAll();
+
+        return ResponseEntity.ok(
+                racingResults.stream()
+                        .map(RacingResultResponse::from)
+                        .collect(Collectors.toList())
+        );
     }
 }

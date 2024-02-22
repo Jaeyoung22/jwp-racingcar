@@ -25,10 +25,16 @@ public class PlayerResultJdbcRepository implements PlayerResultRepository {
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("names", playerResults.stream().map(PlayerResult::getName).collect(Collectors.toList()));
-        return template.query("select * from player_result where name in (:names)",
+        return template.query("select * from PLAYER_RESULT where name in (:names)",
                 parameters,
                 new PlayerResultMapper()
         );
     }
 
+    @Override
+    public List<PlayerResult> findAll() {
+        return template.query("select * from PLAYER_RESULT",
+                new PlayerResultMapper()
+        );
+    }
 }
