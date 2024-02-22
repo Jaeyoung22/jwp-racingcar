@@ -29,8 +29,6 @@ public class Game {
 
         for (int i = 0; i < trialCount.getValue(); i++) {
             cars.race();
-            Map<String, Integer> currentPositions = cars.fetchPlayerResults();
-            OutputView.printCurrentPositions(currentPositions);
         }
     }
 
