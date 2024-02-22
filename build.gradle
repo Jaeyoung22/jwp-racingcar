@@ -7,11 +7,16 @@ plugins {
 sourceCompatibility = '11'
 
 repositories {
+	maven { url 'https://jitpack.io' }
 	mavenCentral()
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.github.woowacourse-projects:mission-utils:1.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
